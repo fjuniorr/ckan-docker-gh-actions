@@ -12,6 +12,9 @@ jobs:
       - name: Start containers
         run: docker compose -f "docker/docker-compose.yml" up -d --build
 
+      - name: Check containers
+        run: docker ps -a
+
       - name: Test redis
         run: curl http://localhost:8000/redis
 
