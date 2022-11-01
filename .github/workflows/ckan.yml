@@ -9,8 +9,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Start containers
-        run: docker compose -f "docker/docker-compose.yml" up -d --build
+      - uses: isbang/compose-action@v1.4.0
+        with:
+          compose-file: "./docker/docker-compose.yml"
+
+      # - name: Start containers
+      #   run: docker compose -f "docker/docker-compose.yml" up -d --build
 
       - name: Check containers
         run: docker ps -a
