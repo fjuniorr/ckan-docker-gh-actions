@@ -1,0 +1,22 @@
+name: Learning github actions
+
+on: [push]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Start containers
+        run: docker compose -f "docker/docker-compose.yml" up -d --build
+
+      - name: Test redis
+        run: curl http://localhost:8000/redis
+
+      - name: Test db
+        run: curl http://localhost:8000/db
+
+      - name: Test solr
+        run: curl http://localhost:8000/solr
