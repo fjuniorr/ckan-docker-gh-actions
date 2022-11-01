@@ -20,7 +20,7 @@ jobs:
         run: docker ps -a
 
       - name: Check container log
-        run: docker logs docker-ckan-1
+        run: docker logs docker_ckan_1
 
       - name: Test redis
         run: curl http://localhost:8000/redis
