@@ -16,13 +16,16 @@ jobs:
       - name: Start containers
         run: docker compose -f "docker/docker-compose.yml" up -d --build
 
-      - name: Check containers
-        run: docker ps -a
-
       - name: Check container log
         run: docker logs docker-ckan-1
 
+      - name: Check container log
+        run: docker logs docker-db-1
+
       - run: docker exec docker-ckan-1 ping -c 3 db
+
+      - name: Test ckan
+        run: curl http://localhost:8000/
 
       - name: Test redis
         run: curl http://localhost:8000/redis
