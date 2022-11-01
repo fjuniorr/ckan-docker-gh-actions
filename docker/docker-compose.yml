@@ -1,7 +1,9 @@
 version: "3.9"
 services:
   ckan:
-    build: .
+    build:
+      context: ckan/
+      dockerfile: Dockerfile
     ports:
       - "8000:5000"
     environment:
