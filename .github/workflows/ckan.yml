@@ -3,29 +3,32 @@ name: Learning github actions
 on: [push]
 
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    # - uses: isbang/compose-action@v1.4.0
-    #   with:
-    #     compose-file: "./docker/docker-compose.yml"
+      # - uses: isbang/compose-action@v1.4.0
+      #   with:
+      #     compose-file: "./docker/docker-compose.yml"
 
-    - name: Start containers
-      run: docker compose -f "docker/docker-compose.yml" up -d --build
+      - name: Start containers
+        run: docker compose -f "docker/docker-compose.yml" up -d --build
 
-    - name: Check containers
-      run: docker ps -a
+      - name: Check containers
+        run: docker ps -a
 
-    - name: Check container log
-      run: docker logs docker-ckan-1
+      - name: Check container log
+        run: docker logs docker-ckan-1
 
-    - name: Test redis
-      run: curl http://localhost:8000/redis
+      - run: docker exec docker-ckan-1 ping -c 3 db
 
-    - name: Test db
-      run: curl http://localhost:8000/db
+      - name: Test redis
+        run: curl http://localhost:8000/redis
 
-    - name: Test solr
-      run: curl http://localhost:8000/solr
+      - name: Test db
+        run: curl http://localhost:8000/db
+
+      - name: Test solr
+        run: curl http://localhost:8000/solr
