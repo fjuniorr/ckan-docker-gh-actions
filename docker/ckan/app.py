@@ -3,6 +3,7 @@ import pysolr
 import redis
 import psycopg2
 import requests
+import datetime
 from flask import Flask
 
 app = Flask(__name__)
@@ -22,23 +23,22 @@ def get_hit_count():
 
 @app.route('/')
 def hello():
-    return 'Hello world'
+    result = {'db': ping_db(), 'redis': ping_redis(), 'solr': ping_solr()}
+    return result
 
-@app.route('/db')
-def hello_db():
-    cur = conn.cursor()
-    cur.execute('select count(*),state from pg_stat_activity where datname = %s group by 2;',('ckan', ))
-    rows = cur.fetchall()
-    return rows
+def ping_db():
+    with conn.cursor() as cur:
+        cur.execute('select NOW()')
+        result = cur.fetchall()
+        conn.commit()
+    return result[0][0].strftime('%Y%m%dT%H%M%S')
 
-@app.route('/redis')
-def hello_redis():
+def ping_redis():
     count = get_hit_count()
-    return 'Redis hit count: {}.\n'.format(count)
+    return count
 
-@app.route('/solr')
-def hello_solr():
+def ping_solr():
     # pong = solr.ping()
     # return 'Health check: {}.\n'.format(pong)
     r = requests.get('http://solr:8983/solr')
-    return r.content
+    return r.status_code
