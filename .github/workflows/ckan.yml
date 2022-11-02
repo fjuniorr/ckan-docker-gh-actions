@@ -12,8 +12,8 @@ jobs:
       - name: Start containers
         run: docker compose -f "docker/docker-compose.yml" up -d --build
 
-      - name: Sleeping
-        run: sleep 10
+      # - name: Sleeping
+      #   run: sleep 10
 
       - name: Test ckan
         run: curl http://localhost:8000/

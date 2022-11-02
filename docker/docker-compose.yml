@@ -10,6 +10,8 @@ services:
       - POSTGRES_PASSWORD=ckan
     depends_on:
       - "db"
+      - "solr"
+      - "redis"
     command: ["./wait-for-postgres.sh", "db", "flask", "run"]
   db:
     image: "postgres:12-alpine"
