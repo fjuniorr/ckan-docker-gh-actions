@@ -4,7 +4,7 @@
 \alias{ping}
 \title{Flatten resource}
 \usage{
-ping(host = "localhost", port = "8080")
+ping(host = "localhost", port = "8000")
 }
 \arguments{
 \item{host}{path to a datapackage.json file}
