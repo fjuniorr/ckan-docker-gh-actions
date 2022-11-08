@@ -13,7 +13,9 @@
 #' }
 #' @export
 ping <- function(host = "localhost", port = "8000") {
-  url <- glue::glue("http://{host}:{port}")
+  url <- glue::glue("http://{host}:{port}/api/3/action/status_show")
   res <- httr::GET(url)
-  httr::content(res)
+  result = httr::content(res)
+  print(result)
+  result
   }
