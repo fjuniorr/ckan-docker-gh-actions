@@ -1,25 +1,25 @@
 version: "3.9"
 services:
   ckan:
-    build:
-      context: ckan/
-      dockerfile: Dockerfile
+    image: "openknowledge/ckan-dev:2.9"
+    environment:
+      - CKAN_SQLALCHEMY_URL=postgresql://ckan_default:pass@postgres/ckan_test
+      - CKAN_DATASTORE_WRITE_URL=postgresql://datastore_write:pass@postgres/datastore_test
+      - CKAN_DATASTORE_READ_URL=postgresql://datastore_read:pass@postgres/datastore_test
+      - CKAN_SOLR_URL=http://solr:8983/solr/ckan
+      - CKAN_REDIS_URL=redis://redis:6379/1
+      - CKAN_DATAPUSHER_URL=http://datapusher:8800
+      - CKAN__DATAPUSHER__CALLBACK_URL_BASE=http://ckan:5000
+      - TZ=UTC
     ports:
       - "8000:5000"
+  postgres:
+    image: "ckan/ckan-postgres-dev:2.9"
     environment:
-      - POSTGRES_PASSWORD=ckan
-    depends_on:
-      - "db"
-      - "solr"
-      - "redis"
-    command: ["./wait-for-postgres.sh", "db", "flask", "run"]
-  db:
-    image: "postgres:12-alpine"
-    environment:
-      - POSTGRES_DB=ckan
-      - POSTGRES_USER=ckan
-      - POSTGRES_PASSWORD=ckan
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
   solr: 
-    image: "solr:6.6.6"
+    image: "ckan/ckan-solr:2.9"
   redis:
     image: "redis:5.0.14"
