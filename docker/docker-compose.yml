@@ -11,6 +11,9 @@ services:
       - CKAN_DATAPUSHER_URL=http://datapusher:8800
       - CKAN__DATAPUSHER__CALLBACK_URL_BASE=http://ckan:5000
       - TZ=UTC
+      - CKAN_SYSADMIN_NAME=ckan_admin
+      - CKAN_SYSADMIN_PASSWORD=test1234
+      - CKAN_SYSADMIN_EMAIL=mail@example.com
     ports:
       - "5000:5000"
   postgres:

@@ -22,11 +22,11 @@ ping <- function(host = "localhost", port = "5000") {
 
 #' @export
 create_org <- function() {
-  try(ckanr::organization_create(name = "ckanr_test_org",
+  res <- ckanr::organization_create(name = "ckanr_test_org",
                           title = "ckanr test org",
                           url = "http://localhost:5000",
-                          key = Sys.getenv("TEST_API_KEY")),
-      silent = TRUE)
+                          key = Sys.getenv("TEST_API_KEY"))
+  print(res)
   result <- ckanr::organization_show(url = "http://localhost:5000", id = "ckanr_test_org")
   result
 }
