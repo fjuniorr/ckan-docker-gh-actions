@@ -12,7 +12,7 @@
 #' ping(host = "ckan")
 #' }
 #' @export
-ping <- function(host = "localhost", port = "8000") {
+ping <- function(host = "localhost", port = "5000") {
   url <- glue::glue("http://{host}:{port}/api/3/action/status_show")
   res <- httr::GET(url)
   result = httr::content(res)

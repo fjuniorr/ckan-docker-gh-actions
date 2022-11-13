@@ -21,6 +21,10 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: 
+        run: |
+          echo "TEST_API_KEY=$(docker exec docker-ckan-1 ckan user token add ckan_admin dev_token | sed 's/API Token created://' | tr -d '\n\t')" >> $GITHUB_ENV
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           error-on: '"never"'
